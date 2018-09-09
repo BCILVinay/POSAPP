@@ -1,0 +1,7 @@
+
+JqueryContext 
+valid 
+validate
+$.validate
+
+ajaxSetup

@@ -1,0 +1,74 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using Practice.MVCAPP.Models;
+@model IPagedList<Order>
+
+@{
+    Layout = null;    
+}
+
+<table border="1">
+    <thead>
+        <tr>
+            @*<th>@Html.DisplayNameFor(modelitem=>modelitem.First().CustomerId) </th>*@
+            <th> @Html.ActionLink("CustomerId", "PaggingWithAjax", new { sortBy = ViewBag.OrderId })</th>
+            <th>@Html.ActionLink("EmployeeName", "PaggingWithAjax", new { sortBy = ViewBag.EmployeeName })</th>
+            @*<th>@Html.DisplayNameFor(modelitem => modelitem.First().EmployeeName)</th>*@
+            <th>@Html.DisplayNameFor(modelitem => modelitem.First().OrderDate)</th>
+            <th>@Html.DisplayNameFor(modelitem => modelitem.First().OrderId)</th>
+            <th>@Html.DisplayNameFor(modelitem => modelitem.First().CompanyName)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var modelItem in @Model)
+        {
+            <tr>
+                <td>@modelItem.CustomerId</td>
+                <td>@modelItem.EmployeeName</td>
+                <td>@modelItem.OrderDate</td>
+                <td>@modelItem.OrderId</td>
+                <td>@modelItem.CompanyName</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+<div id="myPager">
+
+    @Html.PagedListPager(Model, page => Url.Action("PaggingWithAjax", new { page, sortBy = Request["sortBy"] })
+        , new PagedListRenderOptions()
+        {
+            Display = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+            DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+            DisplayPageCountAndCurrentLocation = true,
+            DisplayItemSliceAndTotal = true
+        }
+)
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myPager').on('click', 'a', function (e) {
+            //prevent action link normal functionality
+            e.preventDefault();
+            //ajax call index controller action
+            $.ajax({
+                url: this.href,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+
+                    //load returned data inside contentFrame DIV
+                    $('#Content').html(result);
+                }
+            });
+        });
+    });
+</script>
+
+
+

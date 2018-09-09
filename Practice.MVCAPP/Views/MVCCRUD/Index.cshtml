@@ -1,0 +1,39 @@
+﻿@using Practice.MVCAPP.Models;
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "CreateCustomer", new { id = -1 }, new { btnName = "btnCreate", @class = "btn btn-default" })
+</p>
+
+<p>
+    @Html.ActionLink("Register Form", "Register", new {}, new { btnName = "btnRegister", @class = "btn btn-default" })
+</p>
+
+@{
+    Html.RenderAction("GetCustomer");
+}
+
+@* Bind event for create new customer with popup *@
+
+<script src="~/Scripts/AppScript/ModalDialog.js"></script>
+
+<script type="text/javascript">
+
+    $.ajaxSetup({ cache: false });
+    setDialogLink($("a[btnName = 'btnCreate']"), "Create Customer", 500, 500, "contentFrame", "/MVCCRUD/CreateCustomer");
+    setDialogLink($("a[btnName='btnRegister']"), "Register Form", 500, 600, "ContentFrame", "/MVCCRUD/Register");
+
+</script>
+
+
+
+
+
+
+
+

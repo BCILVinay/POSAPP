@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="Practice.ASP_MultiLanguageApp.Site1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+           Language:
+<asp:DropDownList ID="ddlLanguages" runat="server" AutoPostBack="true">
+    <asp:ListItem Text="English" Value="en-us" />
+    <asp:ListItem Text="French" Value="fr" />
+    <asp:ListItem Text="Hindi" Value="hi" />
+</asp:DropDownList>
+<hr />
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

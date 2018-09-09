@@ -1,0 +1,75 @@
+﻿@using PagedList ;
+@using PagedList.Mvc ;
+@using Practice.MVCAPP.Models;
+
+
+@model IPagedList<Customer>
+<div id="ContentFrame">
+    <table>
+        <thead>
+            <tr>
+                <th>CustomerId</th>
+                <th>CustomerName</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var modelItem in Model)
+        {
+
+                <tr>
+                    <td>@modelItem.CustomerID </td>
+                    <td>@modelItem.CustomerName </td>
+                    <td>@modelItem.Phone </td>
+                    <td>@modelItem.Address </td>
+                </tr>
+        }
+        </tbody>
+
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    <div id="CustomerPagger">
+        @Html.PagedListPager(Model, page => Url.Action("GetCustomerWithSeraching", new { page }));
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#CustomerPagger").on("click", "a", function (e) {
+        e.preventDefault();
+        var pageUrl=this.href.toString();
+        
+        alert(pageUrl.substring(pageUrl.indexOf('?') + 6, pageUrl.length));
+        var page= pageUrl.substring(pageUrl.indexOf('?') + 6, pageUrl.length);
+        //Runing logic ajax basis . pagging 
+        //$.ajax({
+        //    url: this.href,
+        //    type: "GET",
+        //    cache: false,
+        //    success: function (result) {
+        //        $("#ContentFrame").html(result);
+        //    }
+
+        //});
+
+        var obj = {};
+        obj.CustomerID = 0;
+        obj.CustomerName = "";
+        obj.Address = "";
+        $.ajax({
+            url: this.href,
+            type: "POST",
+            data: '{search:' + obj + ' ,page:' + page + '}',
+            
+            cache: false,
+            success: function (result) {
+                $("#ContentFrame").html(result);
+            }
+
+        });
+
+
+
+    });
+</script>
