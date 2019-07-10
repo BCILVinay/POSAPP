@@ -1,4 +1,10 @@
 
+	insert into GROUP_RIGHTS (COMP_CODE , GROUP_CODE , PAGE_CODE, PAGE_NAME,VIEW_RIGHTS ,SAVE_RIGHTS,EDIT_RIGHTS,DELETE_RIGHTS,EXPORT_RIGHTS)
+	VALUES('WT','SYSADMIN',1056,'Reader_Health_Dashboard',1,1,1,1,1)
+
+	insert into PAGE_MASTER (PAGE_NAME , PAGE_DESCRIPTION, COMP_CODE , IsActive)
+	VALUES('Reader_Health_Dashboard','Reader Health','WT',1)
+
 
 ALTER  TABLE   ASSET_ACQUISITION
 ADD ApprovedOn  DATETIME  ;
@@ -6,6 +12,10 @@ ADD ApprovedOn  DATETIME  ;
 
 ALTER  TABLE   ASSET_ACQUISITION
 ADD ApprovedBy VARCHAR(100) ;
+
+
+Alter Table RFID_READER_MASTER ADD ConnectedStatus BIT 
+Alter Table RFID_READER_MASTER ADD LastModifiedDate Datetime
 
 
 Procedure Name : sp_AssetAcquisition
